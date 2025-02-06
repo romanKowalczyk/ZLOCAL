@@ -1,0 +1,17 @@
+projection implementation in class YRAP100_BP_C_TRAVELTP_LHU unique;
+strict ( 2 );
+use draft;
+define behavior for YRAP100_C_TRAVELTP_LHU alias Travel
+use etag
+
+{
+  use create;
+  use update;
+  use delete;
+
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Resume;
+  use action Prepare;
+}

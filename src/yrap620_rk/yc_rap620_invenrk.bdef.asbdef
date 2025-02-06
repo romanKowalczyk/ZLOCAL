@@ -1,0 +1,18 @@
+projection implementation in class YBP_C_RAP620_INVENRK unique;
+//strict ( 2 );
+strict ;
+use draft;
+define behavior for YC_RAP620_INVENRK alias YcRap620Invenrk
+use etag
+
+{
+  use create;
+  use update;
+  use delete;
+
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Resume;
+  use action Prepare;
+}

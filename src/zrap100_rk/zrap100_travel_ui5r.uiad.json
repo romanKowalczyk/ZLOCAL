@@ -1,0 +1,33 @@
+{
+  "formatVersion": "1",
+  "header": {
+    "description": "travelapp",
+    "originalLanguage": "en",
+    "abapLanguageVersion": "cloudDevelopment"
+  },
+  "generalInformation": {
+    "appType": "ui5",
+    "catalogId": "SAP_TC_UI5_REPO_UIAD"
+  },
+  "ui5AppDetails": {
+    "appId": "travelapp"
+  },
+  "navigation": {
+    "targetMappingId": "UI5R_FDFDD23B83A848FA85EE1D6DD568427D7CF4FF7A_TM",
+    "semanticObject": "ZRAP100_RK",
+    "action": "display",
+    "desktop": true,
+    "tablet": true,
+    "phone": true
+  },
+  "tiles": [
+    {
+      "id": "UI5R_FDFDD23B83A848FA85EE1D6DD568427D7CF4FF7A_AL",
+      "tileType": "static",
+      "isDefault": true,
+      "standard": {
+        "title": "travelapp"
+      }
+    }
+  ]
+}

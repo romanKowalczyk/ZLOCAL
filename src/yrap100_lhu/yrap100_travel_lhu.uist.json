@@ -1,0 +1,17 @@
+{
+  "formatVersion": "1",
+  "header": {
+    "description": "Space for travel LHU",
+    "originalLanguage": "en",
+    "abapLanguageVersion": "cloudDevelopment"
+  },
+  "generalInformation": {
+    "title": "Travel App LHU",
+    "sortPriority": 100.0
+  },
+  "pages": [
+    {
+      "name": "YRAP100_TRAVEL_LHU"
+    }
+  ]
+}

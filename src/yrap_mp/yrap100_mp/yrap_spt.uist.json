@@ -1,0 +1,17 @@
+{
+  "formatVersion": "1",
+  "header": {
+    "description": "RAP Space Template",
+    "originalLanguage": "en",
+    "abapLanguageVersion": "cloudDevelopment"
+  },
+  "generalInformation": {
+    "title": "RAP Apps",
+    "sortPriority": 100.0
+  },
+  "pages": [
+    {
+      "name": "YRAP_PGT_TUTORS"
+    }
+  ]
+}

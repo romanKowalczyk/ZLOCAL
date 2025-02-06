@@ -1,0 +1,33 @@
+{
+  "formatVersion": "1",
+  "header": {
+    "description": "Travel App LHU",
+    "originalLanguage": "en",
+    "abapLanguageVersion": "cloudDevelopment"
+  },
+  "generalInformation": {
+    "appType": "ui5",
+    "catalogId": "SAP_TC_UI5_REPO_UIAD"
+  },
+  "ui5AppDetails": {
+    "appId": "yrap100lhu"
+  },
+  "navigation": {
+    "targetMappingId": "UI5R_D376ED1DDC5C17D033243A62DBACBB23530DC30B_TM",
+    "semanticObject": "yrap100_lhu",
+    "action": "display",
+    "desktop": true,
+    "tablet": true,
+    "phone": true
+  },
+  "tiles": [
+    {
+      "id": "UI5R_D376ED1DDC5C17D033243A62DBACBB23530DC30B_AL",
+      "tileType": "static",
+      "isDefault": true,
+      "standard": {
+        "title": "Travel App LHU"
+      }
+    }
+  ]
+}

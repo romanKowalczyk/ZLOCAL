@@ -1,0 +1,26 @@
+{
+  "formatVersion": "1",
+  "header": {
+    "description": "Page for travel LHU",
+    "originalLanguage": "en",
+    "abapLanguageVersion": "cloudDevelopment"
+  },
+  "generalInformation": {
+    "title": "Travel App LHU"
+  },
+  "sections": [
+    {
+      "id": "SECTION_LHU",
+      "title": "Section LHU",
+      "visualizations": [
+        {
+          "id": "APP_DESCRIPTOR_ITEM_LHU",
+          "ladiAssignment": {
+            "ladiId": "YRAP100_LHU_UI5R",
+            "tileId": "UI5R_D376ED1DDC5C17D033243A62DBACBB23530DC30B_AL"
+          }
+        }
+      ]
+    }
+  ]
+}

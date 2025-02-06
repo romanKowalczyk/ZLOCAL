@@ -1,0 +1,17 @@
+{
+  "formatVersion": "1",
+  "header": {
+    "description": "Space for Travel RK",
+    "originalLanguage": "en",
+    "abapLanguageVersion": "cloudDevelopment"
+  },
+  "generalInformation": {
+    "title": "Travel RK",
+    "sortPriority": 100.0
+  },
+  "pages": [
+    {
+      "name": "ZRAP100_TRAVEL_RK"
+    }
+  ]
+}

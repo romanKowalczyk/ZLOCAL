@@ -1,0 +1,11 @@
+@EndUserText: {
+  label: 'Service Definition for YRAP_C_MP_100_TRAV'
+}
+@ObjectModel: {
+  leadingEntity: {
+    name: 'YRAP_C_MP_100_TRAV'
+  }
+}
+define service YRAP_UI_MP_100_TRAV_SRV provider contracts odata_v4_ui {
+  expose YRAP_C_MP_100_TRAV as Travel;
+}

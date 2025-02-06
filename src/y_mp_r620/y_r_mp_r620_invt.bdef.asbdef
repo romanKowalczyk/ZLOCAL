@@ -1,0 +1,57 @@
+managed implementation in class ycl_bp_r_mp_r620_invt unique;
+strict ;
+//strict ( 2 );
+with draft;
+define behavior for Y_R_MP_R620_INVT alias Inventory
+persistent table YMP_R620_INVT
+draft table YMP_R620_INVT_D
+etag master LastChangedAt
+lock master total etag LocalLastChangedAt
+authorization master( global )
+
+{
+  field ( readonly )
+   InventoryID,
+   Uuid,
+   Price,
+   CreatedBy,
+   CreatedAt,
+   LastChangedBy,
+   LastChangedAt,
+   LocalLastChangedAt;
+
+  field ( numbering : managed )
+   Uuid;
+
+
+  create;
+  update;
+  delete;
+
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Edit;
+  draft action Resume;
+  draft determine action Prepare;
+
+  determination CalculateInventoryID on save { create; }
+  determination GetPrice on modify { field ProductId; }
+
+  mapping for YMP_R620_INVT
+  {
+    Uuid = uuid;
+    InventoryId = inventory_id;
+    ProductId = product_id;
+    Quantity = quantity;
+    QuantityUnit = quantity_unit;
+    Price = price;
+    CurrencyCode = currency_code;
+    Description = description;
+    OverallStatus = overall_status;
+    CreatedBy = created_by;
+    CreatedAt = created_at;
+    LastChangedBy = last_changed_by;
+    LastChangedAt = last_changed_at;
+    LocalLastChangedAt = local_last_changed_at;
+  }
+}

@@ -1,0 +1,18 @@
+projection implementation in class ycl_bp_c_mp_r620_invt unique;
+strict ;
+//strict ( 2 );
+use draft;
+define behavior for Y_C_MP_R620_INVT alias Inventory
+use etag
+
+{
+  use create;
+  use update;
+  use delete;
+
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Resume;
+  use action Prepare;
+}

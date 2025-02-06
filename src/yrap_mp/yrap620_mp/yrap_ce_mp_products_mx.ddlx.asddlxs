@@ -1,0 +1,11 @@
+@Metadata.layer: #CUSTOMER
+annotate entity YRAP_CE_MP_PRODUCTS with
+{
+  @UI.lineItem: [{ position: 10 }]
+  Product;
+  @UI.lineItem: [{ position: 20 }]
+  ProductCategory;
+  @UI.lineItem: [{ position: 30 }]
+  Supplier;
+
+}

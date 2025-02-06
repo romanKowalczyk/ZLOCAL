@@ -1,0 +1,7 @@
+@EndUserText: {label: 'Service Definition for Y_C_MP_R620_INVT'}
+@ObjectModel: {leadingEntity: {name: 'Y_C_MP_R620_INVT'}}
+define service YUI_R620_INVT_SRV
+  provider contracts odata_v4_ui {
+  expose Y_C_MP_R620_INVT      as Inventory;
+  expose Y_CE_MP_R620_PRODUCTS as Products;
+}

@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_SIA8" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <SIA8>
+    <BRT_ID>YRAP100_BRT_LHU</BRT_ID>
+    <ABAP_LANGUAGE_VERSION>5</ABAP_LANGUAGE_VERSION>
+    <NAME>YRAP100_BRT_LHU</NAME>
+    <TYPE>SIA8</TYPE>
+    <DESCRIPTION>Business Role Template for Travel Solution LHU</DESCRIPTION>
+    <ABAP_LANGU_VERSION>5</ABAP_LANGU_VERSION>
+    <FIORI_SPACES>
+     <item>
+      <BRT_FIORI_SPACE_ID>YRAP100_BRT_SPT_LHU</BRT_FIORI_SPACE_ID>
+      <BRT_ID>YRAP100_BRT_LHU</BRT_ID>
+      <FIORI_SPACE_ID>YRAP100_TRAVEL_LHU</FIORI_SPACE_ID>
+      <ABAP_LANGUAGE_VERSION>5</ABAP_LANGUAGE_VERSION>
+      <CREATE_USER>CB9980000012</CREATE_USER>
+      <CREATE_TIMESTAMP>20250204131352</CREATE_TIMESTAMP>
+      <CHANGE_USER>CB9980000012</CHANGE_USER>
+      <CHANGE_TIMESTAMP>20250204131520</CHANGE_TIMESTAMP>
+      <TEXT>Travel App LHU</TEXT>
+     </item>
+    </FIORI_SPACES>
+   </SIA8>
+  </asx:values>
+ </asx:abap>
+</abapGit>

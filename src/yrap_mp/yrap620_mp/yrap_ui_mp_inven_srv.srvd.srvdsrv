@@ -1,0 +1,7 @@
+@EndUserText: {label: 'Service Definition for YRAP_C_MP_INVEN'}
+@ObjectModel: {leadingEntity: {name: 'YRAP_C_MP_INVEN'}}
+define service YRAP_UI_MP_INVEN_SRV
+  provider contracts odata_v4_ui {
+  expose YRAP_C_MP_INVEN     as Inventory;
+  expose YRAP_CE_MP_PRODUCTS as Products;
+}

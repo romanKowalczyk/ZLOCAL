@@ -1,0 +1,34 @@
+{
+  "formatVersion": "1",
+  "header": {
+    "description": "RAP Travel App",
+    "originalLanguage": "en",
+    "abapLanguageVersion": "cloudDevelopment"
+  },
+  "generalInformation": {
+    "appType": "ui5",
+    "catalogId": "SAP_TC_UI5_REPO_UIAD"
+  },
+  "ui5AppDetails": {
+    "appId": "com.knauf.demo.yrap100mp"
+  },
+  "navigation": {
+    "targetMappingId": "UI5R_B774FBA20D73021989ECF1A978837090607B0ECD_TM",
+    "semanticObject": "RAP100_MP",
+    "action": "run",
+    "desktop": true,
+    "tablet": true,
+    "phone": true
+  },
+  "tiles": [
+    {
+      "id": "UI5R_B774FBA20D73021989ECF1A978837090607B0ECD_AL",
+      "tileType": "static",
+      "isDefault": true,
+      "standard": {
+        "title": "RAP Travel App",
+        "subtitle": "RAP100 MP"
+      }
+    }
+  ]
+}
