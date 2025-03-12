@@ -94,7 +94,9 @@ CLASS yrap620_sc_products_rk DEFINITION
 ENDCLASS.
 
 
-CLASS yrap620_sc_products_rk IMPLEMENTATION.
+
+CLASS YRAP620_SC_PRODUCTS_RK IMPLEMENTATION.
+
 
   METHOD /iwbep/if_v4_mp_basic_pm~define.
 
@@ -255,6 +257,4 @@ CLASS yrap620_sc_products_rk IMPLEMENTATION.
     lo_primitive_property->set_is_nullable( ).
 
   ENDMETHOD.
-
-
 ENDCLASS.

@@ -14,16 +14,19 @@ class zcl_csys_comm_hdl_rfc_dest definition
     data: destination type rfcdest,
           uri_path    type string,
           query       type string.
-endclass.
+ENDCLASS.
 
 
 
-class zcl_csys_comm_hdl_rfc_dest implementation.
+CLASS ZCL_CSYS_COMM_HDL_RFC_DEST IMPLEMENTATION.
+
+
   method constructor.
     destination = i_destination.
     uri_path = i_uri_path.
     query = i_query.
   endmethod.
+
 
   method zif_csys_comm_handler~send.
     try.
@@ -43,4 +46,4 @@ class zcl_csys_comm_hdl_rfc_dest implementation.
     endtry.
 
   endmethod.
-endclass.
+ENDCLASS.

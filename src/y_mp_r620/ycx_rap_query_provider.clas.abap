@@ -12,11 +12,11 @@ class ycx_rap_query_provider definition
         !previous like previous optional .
   protected section.
   private section.
-endclass.
+ENDCLASS.
 
 
 
-class ycx_rap_query_provider implementation.
+CLASS YCX_RAP_QUERY_PROVIDER IMPLEMENTATION.
 
 
   method constructor ##ADT_SUPPRESS_GENERATION.
@@ -30,4 +30,4 @@ class ycx_rap_query_provider implementation.
       if_t100_message~t100key = textid.
     endif.
   endmethod.
-endclass.
+ENDCLASS.

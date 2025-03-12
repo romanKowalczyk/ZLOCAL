@@ -7,11 +7,13 @@ class yrap_cl_scope_sp_pg definition
     interfaces if_oo_adt_classrun.
   protected section.
   private section.
-endclass.
+ENDCLASS.
 
 
 
-class yrap_cl_scope_sp_pg implementation.
+CLASS YRAP_CL_SCOPE_SP_PG IMPLEMENTATION.
+
+
   method if_oo_adt_classrun~main.
     data(scope_api) = cl_aps_bc_scope_change_api=>create_instance( ).
 
@@ -25,6 +27,7 @@ class yrap_cl_scope_sp_pg implementation.
 
 * Page template
             ( object = if_aps_bc_scope_change_api=>gc_tadir_object-uipg obj_name = 'YRAP_PGT_TUTORS' )
+            ( object = if_aps_bc_scope_change_api=>gc_tadir_object-uipg obj_name = 'YRAP_PGT_UTILS' )
         )
         iv_simulate               =  abap_false
         iv_force                  = abap_false
@@ -33,5 +36,4 @@ class yrap_cl_scope_sp_pg implementation.
         et_message                = data(lt_messages)
     ).
   endmethod.
-
-endclass.
+ENDCLASS.

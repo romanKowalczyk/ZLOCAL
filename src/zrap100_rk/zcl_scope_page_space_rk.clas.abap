@@ -11,7 +11,9 @@ ENDCLASS.
 
 
 
-CLASS zcl_scope_page_space_rk IMPLEMENTATION.
+CLASS ZCL_SCOPE_PAGE_SPACE_RK IMPLEMENTATION.
+
+
   METHOD if_oo_adt_classrun~main.
 
 
@@ -34,6 +36,4 @@ CLASS zcl_scope_page_space_rk IMPLEMENTATION.
     IMPORTING et_object_result = DATA(lt_results)
             et_message = DATA(lt_messages) ).
   ENDMETHOD.
-
 ENDCLASS.
-

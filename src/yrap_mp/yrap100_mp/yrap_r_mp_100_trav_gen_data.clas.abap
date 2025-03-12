@@ -11,7 +11,9 @@ ENDCLASS.
 
 
 
-CLASS yrap_r_mp_100_trav_gen_data IMPLEMENTATION.
+CLASS YRAP_R_MP_100_TRAV_GEN_DATA IMPLEMENTATION.
+
+
   METHOD if_oo_adt_classrun~main.
     delete from yrap_a_mp_trav.
     data:
@@ -50,5 +52,4 @@ CLASS yrap_r_mp_100_trav_gen_data IMPLEMENTATION.
     commit work.
     out->write( 'RAP 100 demo data generated for a table YRAP_A_MP_TRAV' ).
   ENDMETHOD.
-
 ENDCLASS.

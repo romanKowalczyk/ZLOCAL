@@ -1,0 +1,17 @@
+{
+  "formatVersion": "1",
+  "header": {
+    "description": "Page Template RAP Utility Apps",
+    "originalLanguage": "en",
+    "abapLanguageVersion": "cloudDevelopment"
+  },
+  "generalInformation": {
+    "title": "RAP Utility Apps Template"
+  },
+  "sections": [
+    {
+      "id": "YRAP_GEN_UTILS",
+      "title": "General Utilities"
+    }
+  ]
+}

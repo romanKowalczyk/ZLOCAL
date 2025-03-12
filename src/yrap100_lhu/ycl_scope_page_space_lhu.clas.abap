@@ -7,11 +7,13 @@ create public .
     interfaces if_oo_adt_classrun.
   protected section.
   private section.
-endclass.
+ENDCLASS.
 
 
 
-class ycl_scope_page_space_lhu implementation.
+CLASS YCL_SCOPE_PAGE_SPACE_LHU IMPLEMENTATION.
+
+
   method if_oo_adt_classrun~main.
 
 
@@ -33,6 +35,4 @@ class ycl_scope_page_space_lhu implementation.
         et_object_result = data(lt_results)
         et_message       = data(lt_messages) ).
   endmethod.
-
-endclass.
-
+ENDCLASS.

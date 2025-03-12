@@ -29,28 +29,8 @@ ENDCLASS.
 
 
 
-CLASS yrap620_cl_ce_products_rk IMPLEMENTATION.
-  METHOD if_oo_adt_classrun~main.
-    DATA business_data TYPE t_business_data.
-    DATA filter_conditions TYPE if_rap_query_filter=>tt_name_range_pairs.
-    DATA ranges_table TYPE if_rap_query_filter=>tt_range_option.
-    ranges_table = VALUE #( ( sign = 'I' option = 'GE' low = 'HT-1200' ) ).
-    filter_conditions = VALUE #( ( name = 'PRODUCT' range = ranges_table ) ).
+CLASS YRAP620_CL_CE_PRODUCTS_RK IMPLEMENTATION.
 
-    TRY.
-        get_products(
-          EXPORTING
-            it_filter_cond   = filter_conditions
-            top              = 3
-            skip             = 1
-          IMPORTING
-            et_business_data = business_data
-        ).
-        out->write( business_data ).
-      CATCH cx_root INTO DATA(exc).
-        out->write( cl_message_helper=>get_latest_t100_exception( exc )->if_message~get_longtext( ) ).
-    ENDTRY.
-  ENDMETHOD.
 
   METHOD get_products.
     DATA:
@@ -153,6 +133,30 @@ CLASS yrap620_cl_ce_products_rk IMPLEMENTATION.
     ENDTRY.
   ENDMETHOD.
 
+
+  METHOD if_oo_adt_classrun~main.
+    DATA business_data TYPE t_business_data.
+    DATA filter_conditions TYPE if_rap_query_filter=>tt_name_range_pairs.
+    DATA ranges_table TYPE if_rap_query_filter=>tt_range_option.
+    ranges_table = VALUE #( ( sign = 'I' option = 'GE' low = 'HT-1200' ) ).
+    filter_conditions = VALUE #( ( name = 'PRODUCT' range = ranges_table ) ).
+
+    TRY.
+        get_products(
+          EXPORTING
+            it_filter_cond   = filter_conditions
+            top              = 3
+            skip             = 1
+          IMPORTING
+            et_business_data = business_data
+        ).
+        out->write( business_data ).
+      CATCH cx_root INTO DATA(exc).
+        out->write( cl_message_helper=>get_latest_t100_exception( exc )->if_message~get_longtext( ) ).
+    ENDTRY.
+  ENDMETHOD.
+
+
   METHOD if_rap_query_provider~select.
     DATA business_data TYPE t_business_data.
     DATA business_data_ext TYPE t_business_data_ext.
@@ -184,5 +188,4 @@ CLASS yrap620_cl_ce_products_rk IMPLEMENTATION.
 *        raise exception type cx_rap_query_provider exporting textid = exc->textid.
     ENDTRY.
   ENDMETHOD.
-
 ENDCLASS.

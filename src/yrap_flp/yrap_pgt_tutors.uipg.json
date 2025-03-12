@@ -1,0 +1,53 @@
+{
+  "formatVersion": "1",
+  "header": {
+    "description": "Page Template RAP Apps",
+    "originalLanguage": "en",
+    "abapLanguageVersion": "cloudDevelopment"
+  },
+  "generalInformation": {
+    "title": "RAP Tutorials Apps Page Template"
+  },
+  "sections": [
+    {
+      "id": "YRAP100_SC",
+      "title": "RAP100 Apps",
+      "visualizations": [
+        {
+          "id": "YRAP100_SC_TILE_1",
+          "ladiAssignment": {
+            "ladiId": "YRAP100_MP_UI5R",
+            "tileId": "UI5R_B774FBA20D73021989ECF1A978837090607B0ECD_AL"
+          }
+        },
+        {
+          "id": "YRAP100_SC_TILE_2",
+          "ladiAssignment": {
+            "ladiId": "ZRAP100_TRAVEL_UI5R",
+            "tileId": "UI5R_FDFDD23B83A848FA85EE1D6DD568427D7CF4FF7A_AL"
+          }
+        },
+        {
+          "id": "YRAP100_SC_TILE_3",
+          "ladiAssignment": {
+            "ladiId": "YRAP100_LHU_UI5R",
+            "tileId": "UI5R_D376ED1DDC5C17D033243A62DBACBB23530DC30B_AL"
+          }
+        }
+      ]
+    },
+    {
+      "id": "YRAP620_SC",
+      "title": "RAP620 Apps",
+      "visualizations": [
+        {
+          "id": "YRAP620_SC_TILE_1",
+          "ladiAssignment": {
+            "ladiId": "YRAP620MP_UI5R",
+            "tileId": "UI5R_341E36B633940AC75B9D87E67916D630B8A5CCEA_AL"
+          }
+        }
+      ]
+    }
+  ]
+}

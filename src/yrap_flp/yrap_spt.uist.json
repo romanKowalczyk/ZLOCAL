@@ -6,10 +6,13 @@
     "abapLanguageVersion": "cloudDevelopment"
   },
   "generalInformation": {
-    "title": "RAP Apps",
+    "title": "RAP Custom Apps",
     "sortPriority": 100.0
   },
   "pages": [
+    {
+      "name": "YRAP_PGT_UTILS"
+    },
     {
       "name": "YRAP_PGT_TUTORS"
     }

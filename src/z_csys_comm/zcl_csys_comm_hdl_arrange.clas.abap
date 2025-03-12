@@ -18,15 +18,20 @@ class zcl_csys_comm_hdl_arrange definition
           service_id  type if_com_management=>ty_cscn_outb_srv_id,
           uri_path    type string,
           query       type string.
-endclass.
+ENDCLASS.
 
-class zcl_csys_comm_hdl_arrange implementation.
+
+
+CLASS ZCL_CSYS_COMM_HDL_ARRANGE IMPLEMENTATION.
+
+
   method constructor.
     scenario_id = i_scenario_id.
     service_id = i_service_id.
     uri_path = i_uri_path.
     query = i_query.
   endmethod.
+
 
   method zif_csys_comm_handler~send.
     data(ca_factory) = cl_com_arrangement_factory=>create_instance( ).
@@ -63,4 +68,4 @@ class zcl_csys_comm_hdl_arrange implementation.
     endtry.
 
   endmethod.
-endclass.
+ENDCLASS.

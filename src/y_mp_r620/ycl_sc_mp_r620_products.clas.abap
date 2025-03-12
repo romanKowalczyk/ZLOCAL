@@ -95,7 +95,9 @@ CLASS ycl_sc_mp_r620_products DEFINITION
 ENDCLASS.
 
 
-CLASS ycl_sc_mp_r620_products IMPLEMENTATION.
+
+CLASS YCL_SC_MP_R620_PRODUCTS IMPLEMENTATION.
+
 
   METHOD /iwbep/if_v4_mp_basic_pm~define.
 
@@ -256,6 +258,4 @@ CLASS ycl_sc_mp_r620_products IMPLEMENTATION.
     lo_primitive_property->set_is_nullable( ).
 
   ENDMETHOD.
-
-
 ENDCLASS.

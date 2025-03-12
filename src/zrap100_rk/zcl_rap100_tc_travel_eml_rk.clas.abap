@@ -32,7 +32,9 @@ ENDCLASS.
 
 
 
-CLASS zcl_rap100_tc_travel_eml_rk IMPLEMENTATION.
+CLASS ZCL_RAP100_TC_TRAVEL_EML_RK IMPLEMENTATION.
+
+
   METHOD class_setup.
     " create the test doubles for the underlying CDS entities
     cds_test_environment = cl_cds_test_environment=>create_for_multiple_cds(
@@ -52,25 +54,13 @@ CLASS zcl_rap100_tc_travel_eml_rk IMPLEMENTATION.
     customer_mock_data = VALUE #( ( customer_id = '000093' last_name = 'Customer 000093' ) ).
   ENDMETHOD.
 
+
   METHOD class_teardown.
     " remove test doubles
     cds_test_environment->destroy(  ).
     sql_test_environment->destroy(  ).
   ENDMETHOD.
 
-  METHOD setup.
-    " clear the test doubles per test
-    cds_test_environment->clear_doubles(  ).
-    sql_test_environment->clear_doubles(  ).
-    " insert test data into test doubles
-    sql_test_environment->insert_test_data( agency_mock_data   ).
-    sql_test_environment->insert_test_data( customer_mock_data ).
-  ENDMETHOD.
-
-  METHOD teardown.
-    " clean up any involved entity
-    ROLLBACK ENTITIES.
-  ENDMETHOD.
 
   METHOD create_with_action.
     " create a complete composition: Travel (root)
@@ -131,5 +121,21 @@ CLASS zcl_rap100_tc_travel_eml_rk IMPLEMENTATION.
     " assert the discounted booking_fee
     cl_abap_unit_assert=>assert_equals( msg = 'discounted booking_fee' exp = '16' act = lt_travel[ 1 ]-BookingFee ).
 
+  ENDMETHOD.
+
+
+  METHOD setup.
+    " clear the test doubles per test
+    cds_test_environment->clear_doubles(  ).
+    sql_test_environment->clear_doubles(  ).
+    " insert test data into test doubles
+    sql_test_environment->insert_test_data( agency_mock_data   ).
+    sql_test_environment->insert_test_data( customer_mock_data ).
+  ENDMETHOD.
+
+
+  METHOD teardown.
+    " clean up any involved entity
+    ROLLBACK ENTITIES.
   ENDMETHOD.
 ENDCLASS.

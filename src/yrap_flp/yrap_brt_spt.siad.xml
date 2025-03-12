@@ -7,7 +7,7 @@
     <BRT_ID>YRAP_BRT</BRT_ID>
     <FIORI_SPACE_ID>YRAP_SPT</FIORI_SPACE_ID>
     <ABAP_LANGUAGE_VERSION>5</ABAP_LANGUAGE_VERSION>
-    <DESCRIPTION>Assignment of RAP Space template to Business Role template</DESCRIPTION>
+    <DESCRIPTION>Assignment of RAP Space Template to Business Role Template</DESCRIPTION>
     <MASTER_LANGUAGE>EN</MASTER_LANGUAGE>
    </SIAD>
   </asx:values>

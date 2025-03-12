@@ -787,7 +787,9 @@ CLASS zsc_gwsample_basic_mp DEFINITION
 ENDCLASS.
 
 
-CLASS zsc_gwsample_basic_mp IMPLEMENTATION.
+
+CLASS ZSC_GWSAMPLE_BASIC_MP IMPLEMENTATION.
+
 
   METHOD /iwbep/if_v4_mp_basic_pm~define.
 
@@ -822,86 +824,40 @@ CLASS zsc_gwsample_basic_mp IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD def_ct_address.
+  METHOD define_primitive_types.
 
-    DATA:
-      lo_complex_property    TYPE REF TO /iwbep/if_v4_pm_cplx_prop,
-      lo_complex_type        TYPE REF TO /iwbep/if_v4_pm_cplx_type,
-      lo_navigation_property TYPE REF TO /iwbep/if_v4_pm_nav_prop,
-      lo_primitive_property  TYPE REF TO /iwbep/if_v4_pm_prim_prop.
+    DATA lo_primitive_type TYPE REF TO /iwbep/if_v4_pm_prim_type.
 
 
-    lo_complex_type = mo_model->create_complex_type_by_struct(
-                                    iv_complex_type_name      = 'CT_ADDRESS'
-                                    is_structure              = VALUE tys_ct_address( )
-                                    iv_do_gen_prim_props         = abap_true
-                                    iv_do_gen_prim_prop_colls    = abap_true
-                                    iv_do_add_conv_to_prim_props = abap_true ).
+    lo_primitive_type = mo_model->create_primitive_type_by_elem(
+                            iv_primitive_type_name = 'NO_OF_SALES_ORDERS'
+                            iv_element             = VALUE tys_types_for_prim_types-no_of_sales_orders( ) ).
+    lo_primitive_type->set_edm_type( 'Int32' ) ##NO_TEXT.
+    lo_primitive_type->set_scale_variable( ).
 
-    lo_complex_type->set_edm_name( 'CT_Address' ) ##NO_TEXT.
+    lo_primitive_type = mo_model->create_primitive_type_by_elem(
+                            iv_primitive_type_name = 'SALES_ORDER_ID'
+                            iv_element             = VALUE tys_types_for_prim_types-sales_order_id( ) ).
+    lo_primitive_type->set_edm_type( 'String' ) ##NO_TEXT.
+    lo_primitive_type->set_scale_variable( ).
 
+    lo_primitive_type = mo_model->create_primitive_type_by_elem(
+                            iv_primitive_type_name = 'SALES_ORDER_ID_2'
+                            iv_element             = VALUE tys_types_for_prim_types-sales_order_id_2( ) ).
+    lo_primitive_type->set_edm_type( 'String' ) ##NO_TEXT.
+    lo_primitive_type->set_scale_variable( ).
 
-    lo_primitive_property = lo_complex_type->get_primitive_property( 'CITY' ).
-    lo_primitive_property->set_edm_name( 'City' ) ##NO_TEXT.
-    lo_primitive_property->set_edm_type( 'String' ) ##NO_TEXT.
-    lo_primitive_property->set_max_length( 40 ) ##NUMBER_OK.
-    lo_primitive_property->set_is_nullable( ).
+    lo_primitive_type = mo_model->create_primitive_type_by_elem(
+                            iv_primitive_type_name = 'SALES_ORDER_ID_3'
+                            iv_element             = VALUE tys_types_for_prim_types-sales_order_id_3( ) ).
+    lo_primitive_type->set_edm_type( 'String' ) ##NO_TEXT.
+    lo_primitive_type->set_scale_variable( ).
 
-    lo_primitive_property = lo_complex_type->get_primitive_property( 'POSTAL_CODE' ).
-    lo_primitive_property->set_edm_name( 'PostalCode' ) ##NO_TEXT.
-    lo_primitive_property->set_edm_type( 'String' ) ##NO_TEXT.
-    lo_primitive_property->set_max_length( 10 ) ##NUMBER_OK.
-    lo_primitive_property->set_is_nullable( ).
-
-    lo_primitive_property = lo_complex_type->get_primitive_property( 'STREET' ).
-    lo_primitive_property->set_edm_name( 'Street' ) ##NO_TEXT.
-    lo_primitive_property->set_edm_type( 'String' ) ##NO_TEXT.
-    lo_primitive_property->set_max_length( 60 ) ##NUMBER_OK.
-    lo_primitive_property->set_is_nullable( ).
-
-    lo_primitive_property = lo_complex_type->get_primitive_property( 'BUILDING' ).
-    lo_primitive_property->set_edm_name( 'Building' ) ##NO_TEXT.
-    lo_primitive_property->set_edm_type( 'String' ) ##NO_TEXT.
-    lo_primitive_property->set_max_length( 10 ) ##NUMBER_OK.
-    lo_primitive_property->set_is_nullable( ).
-
-    lo_primitive_property = lo_complex_type->get_primitive_property( 'COUNTRY' ).
-    lo_primitive_property->set_edm_name( 'Country' ) ##NO_TEXT.
-    lo_primitive_property->set_edm_type( 'String' ) ##NO_TEXT.
-    lo_primitive_property->set_max_length( 3 ) ##NUMBER_OK.
-    lo_primitive_property->set_is_nullable( ).
-
-    lo_primitive_property = lo_complex_type->get_primitive_property( 'ADDRESS_TYPE' ).
-    lo_primitive_property->set_edm_name( 'AddressType' ) ##NO_TEXT.
-    lo_primitive_property->set_edm_type( 'String' ) ##NO_TEXT.
-    lo_primitive_property->set_max_length( 2 ) ##NUMBER_OK.
-    lo_primitive_property->set_is_nullable( ).
-
-  ENDMETHOD.
-
-
-  METHOD def_ct_string.
-
-    DATA:
-      lo_complex_property    TYPE REF TO /iwbep/if_v4_pm_cplx_prop,
-      lo_complex_type        TYPE REF TO /iwbep/if_v4_pm_cplx_type,
-      lo_navigation_property TYPE REF TO /iwbep/if_v4_pm_nav_prop,
-      lo_primitive_property  TYPE REF TO /iwbep/if_v4_pm_prim_prop.
-
-
-    lo_complex_type = mo_model->create_complex_type_by_struct(
-                                    iv_complex_type_name      = 'CT_STRING'
-                                    is_structure              = VALUE tys_ct_string( )
-                                    iv_do_gen_prim_props         = abap_true
-                                    iv_do_gen_prim_prop_colls    = abap_true
-                                    iv_do_add_conv_to_prim_props = abap_true ).
-
-    lo_complex_type->set_edm_name( 'CT_String' ) ##NO_TEXT.
-
-
-    lo_primitive_property = lo_complex_type->get_primitive_property( 'STRING' ).
-    lo_primitive_property->set_edm_name( 'String' ) ##NO_TEXT.
-    lo_primitive_property->set_edm_type( 'String' ) ##NO_TEXT.
+    lo_primitive_type = mo_model->create_primitive_type_by_elem(
+                            iv_primitive_type_name = 'SALES_ORDER_ID_4'
+                            iv_element             = VALUE tys_types_for_prim_types-sales_order_id_4( ) ).
+    lo_primitive_type->set_edm_type( 'String' ) ##NO_TEXT.
+    lo_primitive_type->set_scale_variable( ).
 
   ENDMETHOD.
 
@@ -1138,6 +1094,90 @@ CLASS zsc_gwsample_basic_mp IMPLEMENTATION.
   ENDMETHOD.
 
 
+  METHOD def_ct_address.
+
+    DATA:
+      lo_complex_property    TYPE REF TO /iwbep/if_v4_pm_cplx_prop,
+      lo_complex_type        TYPE REF TO /iwbep/if_v4_pm_cplx_type,
+      lo_navigation_property TYPE REF TO /iwbep/if_v4_pm_nav_prop,
+      lo_primitive_property  TYPE REF TO /iwbep/if_v4_pm_prim_prop.
+
+
+    lo_complex_type = mo_model->create_complex_type_by_struct(
+                                    iv_complex_type_name      = 'CT_ADDRESS'
+                                    is_structure              = VALUE tys_ct_address( )
+                                    iv_do_gen_prim_props         = abap_true
+                                    iv_do_gen_prim_prop_colls    = abap_true
+                                    iv_do_add_conv_to_prim_props = abap_true ).
+
+    lo_complex_type->set_edm_name( 'CT_Address' ) ##NO_TEXT.
+
+
+    lo_primitive_property = lo_complex_type->get_primitive_property( 'CITY' ).
+    lo_primitive_property->set_edm_name( 'City' ) ##NO_TEXT.
+    lo_primitive_property->set_edm_type( 'String' ) ##NO_TEXT.
+    lo_primitive_property->set_max_length( 40 ) ##NUMBER_OK.
+    lo_primitive_property->set_is_nullable( ).
+
+    lo_primitive_property = lo_complex_type->get_primitive_property( 'POSTAL_CODE' ).
+    lo_primitive_property->set_edm_name( 'PostalCode' ) ##NO_TEXT.
+    lo_primitive_property->set_edm_type( 'String' ) ##NO_TEXT.
+    lo_primitive_property->set_max_length( 10 ) ##NUMBER_OK.
+    lo_primitive_property->set_is_nullable( ).
+
+    lo_primitive_property = lo_complex_type->get_primitive_property( 'STREET' ).
+    lo_primitive_property->set_edm_name( 'Street' ) ##NO_TEXT.
+    lo_primitive_property->set_edm_type( 'String' ) ##NO_TEXT.
+    lo_primitive_property->set_max_length( 60 ) ##NUMBER_OK.
+    lo_primitive_property->set_is_nullable( ).
+
+    lo_primitive_property = lo_complex_type->get_primitive_property( 'BUILDING' ).
+    lo_primitive_property->set_edm_name( 'Building' ) ##NO_TEXT.
+    lo_primitive_property->set_edm_type( 'String' ) ##NO_TEXT.
+    lo_primitive_property->set_max_length( 10 ) ##NUMBER_OK.
+    lo_primitive_property->set_is_nullable( ).
+
+    lo_primitive_property = lo_complex_type->get_primitive_property( 'COUNTRY' ).
+    lo_primitive_property->set_edm_name( 'Country' ) ##NO_TEXT.
+    lo_primitive_property->set_edm_type( 'String' ) ##NO_TEXT.
+    lo_primitive_property->set_max_length( 3 ) ##NUMBER_OK.
+    lo_primitive_property->set_is_nullable( ).
+
+    lo_primitive_property = lo_complex_type->get_primitive_property( 'ADDRESS_TYPE' ).
+    lo_primitive_property->set_edm_name( 'AddressType' ) ##NO_TEXT.
+    lo_primitive_property->set_edm_type( 'String' ) ##NO_TEXT.
+    lo_primitive_property->set_max_length( 2 ) ##NUMBER_OK.
+    lo_primitive_property->set_is_nullable( ).
+
+  ENDMETHOD.
+
+
+  METHOD def_ct_string.
+
+    DATA:
+      lo_complex_property    TYPE REF TO /iwbep/if_v4_pm_cplx_prop,
+      lo_complex_type        TYPE REF TO /iwbep/if_v4_pm_cplx_type,
+      lo_navigation_property TYPE REF TO /iwbep/if_v4_pm_nav_prop,
+      lo_primitive_property  TYPE REF TO /iwbep/if_v4_pm_prim_prop.
+
+
+    lo_complex_type = mo_model->create_complex_type_by_struct(
+                                    iv_complex_type_name      = 'CT_STRING'
+                                    is_structure              = VALUE tys_ct_string( )
+                                    iv_do_gen_prim_props         = abap_true
+                                    iv_do_gen_prim_prop_colls    = abap_true
+                                    iv_do_add_conv_to_prim_props = abap_true ).
+
+    lo_complex_type->set_edm_name( 'CT_String' ) ##NO_TEXT.
+
+
+    lo_primitive_property = lo_complex_type->get_primitive_property( 'STRING' ).
+    lo_primitive_property->set_edm_name( 'String' ) ##NO_TEXT.
+    lo_primitive_property->set_edm_type( 'String' ) ##NO_TEXT.
+
+  ENDMETHOD.
+
+
   METHOD def_product.
 
     DATA:
@@ -1306,6 +1346,37 @@ CLASS zsc_gwsample_basic_mp IMPLEMENTATION.
   ENDMETHOD.
 
 
+  METHOD def_regenerate_all_data.
+
+    DATA:
+      lo_function        TYPE REF TO /iwbep/if_v4_pm_function,
+      lo_function_import TYPE REF TO /iwbep/if_v4_pm_func_imp,
+      lo_parameter       TYPE REF TO /iwbep/if_v4_pm_func_param,
+      lo_return          TYPE REF TO /iwbep/if_v4_pm_func_return.
+
+
+    lo_function = mo_model->create_function( 'REGENERATE_ALL_DATA' ).
+    lo_function->set_edm_name( 'RegenerateAllData' ) ##NO_TEXT.
+
+    " Name of the runtime structure that represents the parameters of this operation
+    lo_function->/iwbep/if_v4_pm_fu_advanced~set_parameter_structure_info( VALUE tys_parameters_1( ) ).
+
+    lo_function_import = lo_function->create_function_import( 'REGENERATE_ALL_DATA' ).
+    lo_function_import->set_edm_name( 'RegenerateAllData' ) ##NO_TEXT.
+    lo_function_import->/iwbep/if_v4_pm_func_imp_v2~set_http_method( 'POST' ).
+
+
+    lo_parameter = lo_function->create_parameter( 'NO_OF_SALES_ORDERS' ).
+    lo_parameter->set_edm_name( 'NoOfSalesOrders' ) ##NO_TEXT.
+    lo_parameter->set_primitive_type( 'NO_OF_SALES_ORDERS' ).
+    lo_parameter->set_is_nullable( ).
+
+    lo_return = lo_function->create_return( ).
+    lo_return->set_complex_type( 'CT_STRING' ).
+
+  ENDMETHOD.
+
+
   METHOD def_sales_order.
 
     DATA:
@@ -1445,6 +1516,130 @@ CLASS zsc_gwsample_basic_mp IMPLEMENTATION.
     lo_navigation_property->set_edm_name( 'ToLineItems' ) ##NO_TEXT.
     lo_navigation_property->set_target_entity_type_name( 'SALES_ORDER_LINE_ITEM' ).
     lo_navigation_property->set_target_multiplicity( /iwbep/if_v4_pm_types=>gcs_nav_multiplicity-to_many_optional ).
+
+  ENDMETHOD.
+
+
+  METHOD def_sales_order_cancel.
+
+    DATA:
+      lo_function        TYPE REF TO /iwbep/if_v4_pm_function,
+      lo_function_import TYPE REF TO /iwbep/if_v4_pm_func_imp,
+      lo_parameter       TYPE REF TO /iwbep/if_v4_pm_func_param,
+      lo_return          TYPE REF TO /iwbep/if_v4_pm_func_return.
+
+
+    lo_function = mo_model->create_function( 'SALES_ORDER_CANCEL' ).
+    lo_function->set_edm_name( 'SalesOrder_Cancel' ) ##NO_TEXT.
+
+    " Name of the runtime structure that represents the parameters of this operation
+    lo_function->/iwbep/if_v4_pm_fu_advanced~set_parameter_structure_info( VALUE tys_parameters_2( ) ).
+
+    lo_function_import = lo_function->create_function_import( 'SALES_ORDER_CANCEL' ).
+    lo_function_import->set_edm_name( 'SalesOrder_Cancel' ) ##NO_TEXT.
+    lo_function_import->/iwbep/if_v4_pm_func_imp_v2~set_http_method( 'POST' ).
+
+
+    lo_parameter = lo_function->create_parameter( 'SALES_ORDER_ID' ).
+    lo_parameter->set_edm_name( 'SalesOrderID' ) ##NO_TEXT.
+    lo_parameter->set_primitive_type( 'SALES_ORDER_ID_2' ).
+    lo_parameter->set_is_nullable( ).
+
+    lo_return = lo_function->create_return( ).
+    lo_return->set_entity_type( 'SALES_ORDER' ).
+
+  ENDMETHOD.
+
+
+  METHOD def_sales_order_confirm.
+
+    DATA:
+      lo_function        TYPE REF TO /iwbep/if_v4_pm_function,
+      lo_function_import TYPE REF TO /iwbep/if_v4_pm_func_imp,
+      lo_parameter       TYPE REF TO /iwbep/if_v4_pm_func_param,
+      lo_return          TYPE REF TO /iwbep/if_v4_pm_func_return.
+
+
+    lo_function = mo_model->create_function( 'SALES_ORDER_CONFIRM' ).
+    lo_function->set_edm_name( 'SalesOrder_Confirm' ) ##NO_TEXT.
+
+    " Name of the runtime structure that represents the parameters of this operation
+    lo_function->/iwbep/if_v4_pm_fu_advanced~set_parameter_structure_info( VALUE tys_parameters_3( ) ).
+
+    lo_function_import = lo_function->create_function_import( 'SALES_ORDER_CONFIRM' ).
+    lo_function_import->set_edm_name( 'SalesOrder_Confirm' ) ##NO_TEXT.
+    lo_function_import->/iwbep/if_v4_pm_func_imp_v2~set_http_method( 'POST' ).
+
+
+    lo_parameter = lo_function->create_parameter( 'SALES_ORDER_ID' ).
+    lo_parameter->set_edm_name( 'SalesOrderID' ) ##NO_TEXT.
+    lo_parameter->set_primitive_type( 'SALES_ORDER_ID' ).
+    lo_parameter->set_is_nullable( ).
+
+    lo_return = lo_function->create_return( ).
+    lo_return->set_entity_type( 'SALES_ORDER' ).
+
+  ENDMETHOD.
+
+
+  METHOD def_sales_order_goods_issue_cr.
+
+    DATA:
+      lo_function        TYPE REF TO /iwbep/if_v4_pm_function,
+      lo_function_import TYPE REF TO /iwbep/if_v4_pm_func_imp,
+      lo_parameter       TYPE REF TO /iwbep/if_v4_pm_func_param,
+      lo_return          TYPE REF TO /iwbep/if_v4_pm_func_return.
+
+
+    lo_function = mo_model->create_function( 'SALES_ORDER_GOODS_ISSUE_CR' ).
+    lo_function->set_edm_name( 'SalesOrder_GoodsIssueCreated' ) ##NO_TEXT.
+
+    " Name of the runtime structure that represents the parameters of this operation
+    lo_function->/iwbep/if_v4_pm_fu_advanced~set_parameter_structure_info( VALUE tys_parameters_4( ) ).
+
+    lo_function_import = lo_function->create_function_import( 'SALES_ORDER_GOODS_ISSUE_CR' ).
+    lo_function_import->set_edm_name( 'SalesOrder_GoodsIssueCreated' ) ##NO_TEXT.
+    lo_function_import->/iwbep/if_v4_pm_func_imp_v2~set_http_method( 'POST' ).
+
+
+    lo_parameter = lo_function->create_parameter( 'SALES_ORDER_ID' ).
+    lo_parameter->set_edm_name( 'SalesOrderID' ) ##NO_TEXT.
+    lo_parameter->set_primitive_type( 'SALES_ORDER_ID_4' ).
+    lo_parameter->set_is_nullable( ).
+
+    lo_return = lo_function->create_return( ).
+    lo_return->set_entity_type( 'SALES_ORDER' ).
+
+  ENDMETHOD.
+
+
+  METHOD def_sales_order_invoice_create.
+
+    DATA:
+      lo_function        TYPE REF TO /iwbep/if_v4_pm_function,
+      lo_function_import TYPE REF TO /iwbep/if_v4_pm_func_imp,
+      lo_parameter       TYPE REF TO /iwbep/if_v4_pm_func_param,
+      lo_return          TYPE REF TO /iwbep/if_v4_pm_func_return.
+
+
+    lo_function = mo_model->create_function( 'SALES_ORDER_INVOICE_CREATE' ).
+    lo_function->set_edm_name( 'SalesOrder_InvoiceCreated' ) ##NO_TEXT.
+
+    " Name of the runtime structure that represents the parameters of this operation
+    lo_function->/iwbep/if_v4_pm_fu_advanced~set_parameter_structure_info( VALUE tys_parameters_5( ) ).
+
+    lo_function_import = lo_function->create_function_import( 'SALES_ORDER_INVOICE_CREATE' ).
+    lo_function_import->set_edm_name( 'SalesOrder_InvoiceCreated' ) ##NO_TEXT.
+    lo_function_import->/iwbep/if_v4_pm_func_imp_v2~set_http_method( 'POST' ).
+
+
+    lo_parameter = lo_function->create_parameter( 'SALES_ORDER_ID' ).
+    lo_parameter->set_edm_name( 'SalesOrderID' ) ##NO_TEXT.
+    lo_parameter->set_primitive_type( 'SALES_ORDER_ID_3' ).
+    lo_parameter->set_is_nullable( ).
+
+    lo_return = lo_function->create_return( ).
+    lo_return->set_entity_type( 'SALES_ORDER' ).
 
   ENDMETHOD.
 
@@ -1976,198 +2171,4 @@ CLASS zsc_gwsample_basic_mp IMPLEMENTATION.
     lo_primitive_property->set_max_length( 30 ) ##NUMBER_OK.
 
   ENDMETHOD.
-
-
-  METHOD def_regenerate_all_data.
-
-    DATA:
-      lo_function        TYPE REF TO /iwbep/if_v4_pm_function,
-      lo_function_import TYPE REF TO /iwbep/if_v4_pm_func_imp,
-      lo_parameter       TYPE REF TO /iwbep/if_v4_pm_func_param,
-      lo_return          TYPE REF TO /iwbep/if_v4_pm_func_return.
-
-
-    lo_function = mo_model->create_function( 'REGENERATE_ALL_DATA' ).
-    lo_function->set_edm_name( 'RegenerateAllData' ) ##NO_TEXT.
-
-    " Name of the runtime structure that represents the parameters of this operation
-    lo_function->/iwbep/if_v4_pm_fu_advanced~set_parameter_structure_info( VALUE tys_parameters_1( ) ).
-
-    lo_function_import = lo_function->create_function_import( 'REGENERATE_ALL_DATA' ).
-    lo_function_import->set_edm_name( 'RegenerateAllData' ) ##NO_TEXT.
-    lo_function_import->/iwbep/if_v4_pm_func_imp_v2~set_http_method( 'POST' ).
-
-
-    lo_parameter = lo_function->create_parameter( 'NO_OF_SALES_ORDERS' ).
-    lo_parameter->set_edm_name( 'NoOfSalesOrders' ) ##NO_TEXT.
-    lo_parameter->set_primitive_type( 'NO_OF_SALES_ORDERS' ).
-    lo_parameter->set_is_nullable( ).
-
-    lo_return = lo_function->create_return( ).
-    lo_return->set_complex_type( 'CT_STRING' ).
-
-  ENDMETHOD.
-
-
-  METHOD def_sales_order_cancel.
-
-    DATA:
-      lo_function        TYPE REF TO /iwbep/if_v4_pm_function,
-      lo_function_import TYPE REF TO /iwbep/if_v4_pm_func_imp,
-      lo_parameter       TYPE REF TO /iwbep/if_v4_pm_func_param,
-      lo_return          TYPE REF TO /iwbep/if_v4_pm_func_return.
-
-
-    lo_function = mo_model->create_function( 'SALES_ORDER_CANCEL' ).
-    lo_function->set_edm_name( 'SalesOrder_Cancel' ) ##NO_TEXT.
-
-    " Name of the runtime structure that represents the parameters of this operation
-    lo_function->/iwbep/if_v4_pm_fu_advanced~set_parameter_structure_info( VALUE tys_parameters_2( ) ).
-
-    lo_function_import = lo_function->create_function_import( 'SALES_ORDER_CANCEL' ).
-    lo_function_import->set_edm_name( 'SalesOrder_Cancel' ) ##NO_TEXT.
-    lo_function_import->/iwbep/if_v4_pm_func_imp_v2~set_http_method( 'POST' ).
-
-
-    lo_parameter = lo_function->create_parameter( 'SALES_ORDER_ID' ).
-    lo_parameter->set_edm_name( 'SalesOrderID' ) ##NO_TEXT.
-    lo_parameter->set_primitive_type( 'SALES_ORDER_ID_2' ).
-    lo_parameter->set_is_nullable( ).
-
-    lo_return = lo_function->create_return( ).
-    lo_return->set_entity_type( 'SALES_ORDER' ).
-
-  ENDMETHOD.
-
-
-  METHOD def_sales_order_confirm.
-
-    DATA:
-      lo_function        TYPE REF TO /iwbep/if_v4_pm_function,
-      lo_function_import TYPE REF TO /iwbep/if_v4_pm_func_imp,
-      lo_parameter       TYPE REF TO /iwbep/if_v4_pm_func_param,
-      lo_return          TYPE REF TO /iwbep/if_v4_pm_func_return.
-
-
-    lo_function = mo_model->create_function( 'SALES_ORDER_CONFIRM' ).
-    lo_function->set_edm_name( 'SalesOrder_Confirm' ) ##NO_TEXT.
-
-    " Name of the runtime structure that represents the parameters of this operation
-    lo_function->/iwbep/if_v4_pm_fu_advanced~set_parameter_structure_info( VALUE tys_parameters_3( ) ).
-
-    lo_function_import = lo_function->create_function_import( 'SALES_ORDER_CONFIRM' ).
-    lo_function_import->set_edm_name( 'SalesOrder_Confirm' ) ##NO_TEXT.
-    lo_function_import->/iwbep/if_v4_pm_func_imp_v2~set_http_method( 'POST' ).
-
-
-    lo_parameter = lo_function->create_parameter( 'SALES_ORDER_ID' ).
-    lo_parameter->set_edm_name( 'SalesOrderID' ) ##NO_TEXT.
-    lo_parameter->set_primitive_type( 'SALES_ORDER_ID' ).
-    lo_parameter->set_is_nullable( ).
-
-    lo_return = lo_function->create_return( ).
-    lo_return->set_entity_type( 'SALES_ORDER' ).
-
-  ENDMETHOD.
-
-
-  METHOD def_sales_order_goods_issue_cr.
-
-    DATA:
-      lo_function        TYPE REF TO /iwbep/if_v4_pm_function,
-      lo_function_import TYPE REF TO /iwbep/if_v4_pm_func_imp,
-      lo_parameter       TYPE REF TO /iwbep/if_v4_pm_func_param,
-      lo_return          TYPE REF TO /iwbep/if_v4_pm_func_return.
-
-
-    lo_function = mo_model->create_function( 'SALES_ORDER_GOODS_ISSUE_CR' ).
-    lo_function->set_edm_name( 'SalesOrder_GoodsIssueCreated' ) ##NO_TEXT.
-
-    " Name of the runtime structure that represents the parameters of this operation
-    lo_function->/iwbep/if_v4_pm_fu_advanced~set_parameter_structure_info( VALUE tys_parameters_4( ) ).
-
-    lo_function_import = lo_function->create_function_import( 'SALES_ORDER_GOODS_ISSUE_CR' ).
-    lo_function_import->set_edm_name( 'SalesOrder_GoodsIssueCreated' ) ##NO_TEXT.
-    lo_function_import->/iwbep/if_v4_pm_func_imp_v2~set_http_method( 'POST' ).
-
-
-    lo_parameter = lo_function->create_parameter( 'SALES_ORDER_ID' ).
-    lo_parameter->set_edm_name( 'SalesOrderID' ) ##NO_TEXT.
-    lo_parameter->set_primitive_type( 'SALES_ORDER_ID_4' ).
-    lo_parameter->set_is_nullable( ).
-
-    lo_return = lo_function->create_return( ).
-    lo_return->set_entity_type( 'SALES_ORDER' ).
-
-  ENDMETHOD.
-
-
-  METHOD def_sales_order_invoice_create.
-
-    DATA:
-      lo_function        TYPE REF TO /iwbep/if_v4_pm_function,
-      lo_function_import TYPE REF TO /iwbep/if_v4_pm_func_imp,
-      lo_parameter       TYPE REF TO /iwbep/if_v4_pm_func_param,
-      lo_return          TYPE REF TO /iwbep/if_v4_pm_func_return.
-
-
-    lo_function = mo_model->create_function( 'SALES_ORDER_INVOICE_CREATE' ).
-    lo_function->set_edm_name( 'SalesOrder_InvoiceCreated' ) ##NO_TEXT.
-
-    " Name of the runtime structure that represents the parameters of this operation
-    lo_function->/iwbep/if_v4_pm_fu_advanced~set_parameter_structure_info( VALUE tys_parameters_5( ) ).
-
-    lo_function_import = lo_function->create_function_import( 'SALES_ORDER_INVOICE_CREATE' ).
-    lo_function_import->set_edm_name( 'SalesOrder_InvoiceCreated' ) ##NO_TEXT.
-    lo_function_import->/iwbep/if_v4_pm_func_imp_v2~set_http_method( 'POST' ).
-
-
-    lo_parameter = lo_function->create_parameter( 'SALES_ORDER_ID' ).
-    lo_parameter->set_edm_name( 'SalesOrderID' ) ##NO_TEXT.
-    lo_parameter->set_primitive_type( 'SALES_ORDER_ID_3' ).
-    lo_parameter->set_is_nullable( ).
-
-    lo_return = lo_function->create_return( ).
-    lo_return->set_entity_type( 'SALES_ORDER' ).
-
-  ENDMETHOD.
-
-
-  METHOD define_primitive_types.
-
-    DATA lo_primitive_type TYPE REF TO /iwbep/if_v4_pm_prim_type.
-
-
-    lo_primitive_type = mo_model->create_primitive_type_by_elem(
-                            iv_primitive_type_name = 'NO_OF_SALES_ORDERS'
-                            iv_element             = VALUE tys_types_for_prim_types-no_of_sales_orders( ) ).
-    lo_primitive_type->set_edm_type( 'Int32' ) ##NO_TEXT.
-    lo_primitive_type->set_scale_variable( ).
-
-    lo_primitive_type = mo_model->create_primitive_type_by_elem(
-                            iv_primitive_type_name = 'SALES_ORDER_ID'
-                            iv_element             = VALUE tys_types_for_prim_types-sales_order_id( ) ).
-    lo_primitive_type->set_edm_type( 'String' ) ##NO_TEXT.
-    lo_primitive_type->set_scale_variable( ).
-
-    lo_primitive_type = mo_model->create_primitive_type_by_elem(
-                            iv_primitive_type_name = 'SALES_ORDER_ID_2'
-                            iv_element             = VALUE tys_types_for_prim_types-sales_order_id_2( ) ).
-    lo_primitive_type->set_edm_type( 'String' ) ##NO_TEXT.
-    lo_primitive_type->set_scale_variable( ).
-
-    lo_primitive_type = mo_model->create_primitive_type_by_elem(
-                            iv_primitive_type_name = 'SALES_ORDER_ID_3'
-                            iv_element             = VALUE tys_types_for_prim_types-sales_order_id_3( ) ).
-    lo_primitive_type->set_edm_type( 'String' ) ##NO_TEXT.
-    lo_primitive_type->set_scale_variable( ).
-
-    lo_primitive_type = mo_model->create_primitive_type_by_elem(
-                            iv_primitive_type_name = 'SALES_ORDER_ID_4'
-                            iv_element             = VALUE tys_types_for_prim_types-sales_order_id_4( ) ).
-    lo_primitive_type->set_edm_type( 'String' ) ##NO_TEXT.
-    lo_primitive_type->set_scale_variable( ).
-
-  ENDMETHOD.
-
 ENDCLASS.

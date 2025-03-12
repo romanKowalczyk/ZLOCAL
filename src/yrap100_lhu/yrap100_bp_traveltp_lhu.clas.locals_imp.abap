@@ -20,6 +20,17 @@ class lhc_yrap100_r_traveltp_lhu definition inheriting from cl_abap_behavior_han
 
     methods validateDates for validate on save
       importing keys for Travel~validateDates.
+    methods deductDiscount for modify
+      importing keys for action Travel~deductDiscount result result.
+    methods copyTravel for modify
+      importing keys for action Travel~copyTravel.
+    methods acceptTravel for modify
+      importing keys for action Travel~acceptTravel result result.
+
+    methods rejectTravel for modify
+      importing keys for action Travel~rejectTravel result result.
+    methods get_instance_features for instance features
+      importing keys request requested_features for Travel result result.
 endclass.
 
 class lhc_yrap100_r_traveltp_lhu implementation.
@@ -230,6 +241,205 @@ class lhc_yrap100_r_traveltp_lhu implementation.
                         %element-EndDate   = if_abap_behv=>mk-on ) to reported-travel.
       endif.
     endloop.
+
+  endmethod.
+
+
+**************************************************************************
+* Instance-bound non-factory action with parameter `deductDiscount`:
+* Deduct the specified discount from the booking fee (BookingFee)
+**************************************************************************
+  method deductDiscount.
+    data travels_for_update type table for update YRAP100_R_TravelTP_LHU.
+    data(keys_with_valid_discount) = keys.
+
+    " check and handle invalid discount values
+    loop at keys_with_valid_discount assigning field-symbol(<key_with_valid_discount>)
+      where %param-discount_percent is initial or %param-discount_percent > 100 or %param-discount_percent <= 0.
+
+      " report invalid discount value appropriately
+      append value #( %tky                       = <key_with_valid_discount>-%tky ) to failed-travel.
+
+      append value #( %tky                       = <key_with_valid_discount>-%tky
+                      %msg                       = new /dmo/cm_flight_messages(
+                      textid   = /dmo/cm_flight_messages=>discount_invalid
+                      severity = if_abap_behv_message=>severity-error )
+                      %element-TotalPrice        = if_abap_behv=>mk-on
+                      %op-%action-deductDiscount = if_abap_behv=>mk-on
+                    ) to reported-travel.
+
+      " remove invalid discount value
+      delete keys_with_valid_discount.
+    endloop.
+
+    " check and go ahead with valid discount values
+    check keys_with_valid_discount is not initial.
+
+    " read relevant travel instance data (only booking fee)
+    read entities of YRAP100_R_TravelTP_LHU in local mode
+      entity Travel
+        fields ( BookingFee )
+        with corresponding #( keys_with_valid_discount )
+      result data(travels).
+
+    loop at travels assigning field-symbol(<travel>).
+      data percentage type decfloat16.
+      data(discount_percent) = keys_with_valid_discount[ key draft %tky = <travel>-%tky ]-%param-discount_percent.
+      percentage =  discount_percent / 100 .
+      data(reduced_fee) = <travel>-BookingFee * ( 1 - percentage ).
+
+      append value #( %tky       = <travel>-%tky
+                      BookingFee = reduced_fee
+                    ) to travels_for_update.
+    endloop.
+
+    " update data with reduced fee
+    modify entities of YRAP100_R_TravelTP_LHU in local mode
+      entity Travel
+        update fields ( BookingFee )
+        with travels_for_update.
+
+    " read changed data for action result
+    read entities of YRAP100_R_TravelTP_LHU in local mode
+      entity Travel
+        all fields with
+        corresponding #( travels )
+      result data(travels_with_discount).
+
+    " set action result
+    result = value #( for travel in travels_with_discount ( %tky   = travel-%tky
+                                                            %param = travel ) ).
+  endmethod.
+
+**************************************************************************
+* Instance-bound factory action `copyTravel`:
+* Copy an existing travel instance
+**************************************************************************
+  method copyTravel.
+    data:
+       travels       type table for create yrap100_r_traveltp_lhu\\travel.
+
+    " remove travel instances with initial %cid (i.e., not set by caller API)
+    read table keys with key %cid = '' into data(key_with_inital_cid).
+    assert key_with_inital_cid is initial.
+
+    " read the data from the travel instances to be copied
+    read entities of yrap100_r_traveltp_lhu in local mode
+       entity travel
+       all fields with corresponding #( keys )
+    result data(travel_read_result)
+    failed failed.
+
+    loop at travel_read_result assigning field-symbol(<travel>).
+      " fill in travel container for creating new travel instance
+      append value #( %cid      = keys[ key entity %key = <travel>-%key ]-%cid
+                      %is_draft = keys[ key entity %key = <travel>-%key ]-%param-%is_draft
+                      %data     = corresponding #( <travel> except TravelID )
+      )
+      to travels assigning field-symbol(<new_travel>).
+
+      " adjust the copied travel instance data
+      "" BeginDate must be on or after system date
+      <new_travel>-BeginDate     = cl_abap_context_info=>get_system_date( ).
+      "" EndDate must be after BeginDate
+      <new_travel>-EndDate       = cl_abap_context_info=>get_system_date( ) + 30.
+      "" OverallStatus of new instances must be set to open ('O')
+      <new_travel>-OverallStatus = travel_status-open.
+    endloop.
+
+    " create new BO instance
+    modify entities of yrap100_r_traveltp_lhu in local mode
+       entity travel
+       create fields ( AgencyID CustomerID BeginDate EndDate BookingFee
+                         TotalPrice CurrencyCode OverallStatus Description )
+          with travels
+       mapped data(mapped_create).
+
+    " set the new BO instances
+    mapped-travel   =  mapped_create-travel .
+  endmethod.
+
+
+*************************************************************************************
+* Instance-bound non-factory action: Set the overall travel status to 'A' (accepted)
+*************************************************************************************
+  method acceptTravel.
+    " modify travel instance
+    modify entities of yrap100_r_traveltp_lhu in local mode
+       entity Travel
+       update fields ( OverallStatus )
+       with value #( for key in keys ( %tky          = key-%tky
+                                       OverallStatus = travel_status-accepted ) )   " 'A'
+    failed failed
+    reported reported.
+
+    " read changed data for action result
+    read entities of yrap100_r_traveltp_lhu in local mode
+       entity Travel
+       all fields with
+       corresponding #( keys )
+       result data(travels).
+
+    " set the action result parameter
+    result = value #( for travel in travels ( %tky   = travel-%tky
+                                              %param = travel ) ).
+  endmethod.
+
+
+*************************************************************************************
+* Instance-bound non-factory action: Set the overall travel status to 'X' (rejected)
+*************************************************************************************
+  method rejectTravel.
+    " modify travel instance(s)
+    modify entities of yrap100_r_traveltp_lhu in local mode
+       entity Travel
+       update fields ( OverallStatus )
+       with value #( for key in keys ( %tky          = key-%tky
+                                       OverallStatus = travel_status-rejected ) )   " 'X'
+    failed failed
+    reported reported.
+
+    " read changed data for action result
+    read entities of yrap100_r_traveltp_lhu in local mode
+       entity Travel
+       all fields with
+       corresponding #( keys )
+       result data(travels).
+
+    " set the action result parameter
+    result = value #( for travel in travels ( %tky   = travel-%tky
+                                              %param = travel ) ).
+  endmethod.
+
+**************************************************************************
+* Instance-based dynamic feature control
+**************************************************************************
+  method get_instance_features.
+    " read relevant travel instance data
+    read entities of YRAP100_R_TravelTP_LHU in local mode
+      entity travel
+        fields ( TravelID OverallStatus )
+        with corresponding #( keys )
+      result data(travels)
+      failed failed.
+
+    " evaluate the conditions, set the operation state, and set result parameter
+    result = value #( for travel in travels
+                      ( %tky                   = travel-%tky
+
+                        %features-%update      = cond #( when travel-OverallStatus = travel_status-accepted
+                                                        then if_abap_behv=>fc-o-disabled else if_abap_behv=>fc-o-enabled   )
+                        %features-%delete      = cond #( when travel-OverallStatus = travel_status-open
+                                                        then if_abap_behv=>fc-o-enabled else if_abap_behv=>fc-o-disabled   )
+                        %action-Edit           = cond #( when travel-OverallStatus = travel_status-accepted
+                                                         then if_abap_behv=>fc-o-disabled else if_abap_behv=>fc-o-enabled   )
+                        %action-acceptTravel   = cond #( when travel-OverallStatus = travel_status-accepted
+                                                          then if_abap_behv=>fc-o-disabled else if_abap_behv=>fc-o-enabled   )
+                        %action-rejectTravel   = cond #( when travel-OverallStatus = travel_status-rejected
+                                                          then if_abap_behv=>fc-o-disabled else if_abap_behv=>fc-o-enabled   )
+                        %action-deductDiscount = cond #( when travel-OverallStatus = travel_status-open
+                                                          then if_abap_behv=>fc-o-enabled else if_abap_behv=>fc-o-disabled   )
+                    ) ).
 
   endmethod.
 

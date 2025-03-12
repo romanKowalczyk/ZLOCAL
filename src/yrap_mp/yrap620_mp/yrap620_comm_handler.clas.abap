@@ -20,14 +20,17 @@ class yrap620_comm_handler definition
             raising cx_web_http_client_error.
   protected section.
   private section.
-endclass.
+ENDCLASS.
 
 
 
-class yrap620_comm_handler implementation.
+CLASS YRAP620_COMM_HANDLER IMPLEMENTATION.
+
+
   method send_request_by_arrangement.
 
   endmethod.
+
 
   method send_request_by_url.
     data lo_http_destination type ref to if_http_destination.
@@ -38,5 +41,4 @@ class yrap620_comm_handler implementation.
       catch cx_root into data(exc).
     endtry.
   endmethod.
-
-endclass.
+ENDCLASS.

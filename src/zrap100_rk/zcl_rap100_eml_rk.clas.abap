@@ -27,7 +27,148 @@ CLASS zcl_rap100_eml_rk DEFINITION
 ENDCLASS.
 
 
-CLASS zcl_rap100_eml_rk IMPLEMENTATION.
+
+CLASS ZCL_RAP100_EML_RK IMPLEMENTATION.
+
+
+  METHOD activate_travel_draft.
+    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " Exercise 9.6: Activate a draft travel BO entity instance
+    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+    "activate travel instance in the transactional buffer
+    MODIFY ENTITIES OF ZRAP100_R_TRAVELP_RK
+      ENTITY Travel
+        EXECUTE Activate FROM
+        VALUE #( ( %cid = 'activate_draft_travel'  %key-TravelID = travel_id ) )
+     MAPPED DATA(mapped)
+     FAILED DATA(failed)
+     REPORTED DATA(reported).
+
+    "persist changes
+    COMMIT ENTITIES
+      RESPONSE OF ZRAP100_R_TRAVELP_RK
+      FAILED DATA(failed_commit)
+      REPORTED DATA(reported_commit).
+
+    "console output
+    console_output->write( |Exercise 9.6: ACTIVATE a draft Travel BO entity instance | ).
+    console_output->write( |- TravelID = { travel_id } | ).
+    IF failed IS NOT INITIAL.
+      console_output->write( |- Cause for failed activate: { failed-travel[ 1 ]-%fail-cause } | ).
+    ELSEIF failed_commit IS NOT INITIAL.
+      console_output->write( |- Cause for failed commit: { failed_commit-travel[ 1 ]-%fail-cause } | ).
+    ENDIF.
+    console_output->write( |--------------------------------------------- | ).
+  ENDMETHOD.
+
+
+  METHOD create_travel.
+    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " Exercise 9.4: Create a travel BO entity instance
+    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    "create in the transactional buffer
+    MODIFY ENTITIES OF ZRAP100_R_TRAVELP_RK
+      ENTITY travel
+        CREATE FIELDS ( CustomerID AgencyID BeginDate EndDate Description )
+          WITH VALUE #( ( %cid        = 'create_travel'
+                          %is_draft   = instance_state
+                          CustomerID  = '15'
+                          AgencyID    = '070042'
+                          BeginDate   = cl_abap_context_info=>get_system_date( )
+                          EndDate     = cl_abap_context_info=>get_system_date( ) + 10
+                          Description = | ABAP DevDays { cl_abap_context_info=>get_system_time(  ) } |
+                      ) )
+
+*      "execute action `rejectTravel`
+*        ENTITY travel
+*        EXECUTE rejectTravel
+*        FROM VALUE #( ( %cid_ref = 'create_travel' %is_draft = instance_state ) )
+
+      MAPPED DATA(mapped)
+      FAILED DATA(failed)
+      REPORTED DATA(reported).
+
+    "persist changes
+    COMMIT ENTITIES
+      RESPONSE OF ZRAP100_R_TRAVELP_RK
+      FAILED DATA(failed_commit)
+      REPORTED DATA(reported_commit).
+
+    "console output
+    console_output->write( |Exercise 9.4: CREATE a new Travel BO entity instance| ).
+    console_output->write( mapped-travel ).
+    IF failed IS NOT INITIAL.
+      console_output->write( |- Cause for failed create: { failed-travel[ 1 ]-%fail-cause } | ).
+    ELSEIF failed_commit IS NOT INITIAL.
+      console_output->write( |- Cause for failed commit: { failed_commit-travel[ 1 ]-%fail-cause } | ).
+    ENDIF.
+    console_output->write( |--------------------------------------------- | ).
+  ENDMETHOD.
+
+
+  METHOD delete_travel.
+    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " Exercise 9.5: Delete a travel BO entity instance
+    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    "delete in the transactional buffer
+    MODIFY ENTITIES OF ZRAP100_R_TRAVELP_RK
+      ENTITY travel
+        DELETE FROM
+          VALUE
+             #( ( TravelID = travel_id  %is_draft   = instance_state ) )
+     FAILED DATA(failed)
+     REPORTED DATA(reported).
+
+    "persist changes
+    COMMIT ENTITIES
+      RESPONSE OF ZRAP100_R_TRAVELP_RK
+      FAILED     DATA(failed_commit)
+      REPORTED   DATA(reported_commit).
+
+    "console output
+    console_output->write( |Exercise 9.5: DELETE a Travel BO entity instance | ).
+    console_output->write( |- TravelID = { travel_id } | ).
+    IF failed IS NOT INITIAL.
+      console_output->write( |- Cause for failed delete: { failed-travel[ 1 ]-%fail-cause } | ).
+    ELSEIF failed_commit IS NOT INITIAL.
+      console_output->write( |- Cause for failed commit: { failed_commit-travel[ 1 ]-%fail-cause } | ).
+    ENDIF.
+    console_output->write( |--------------------------------------------- | ).
+  ENDMETHOD.
+
+
+  METHOD discard_travel_draft.
+    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " Exercise 9.7: Discard a draft travel BO entity instance
+    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    "activate travel instance in the transactional buffer
+    MODIFY ENTITIES OF ZRAP100_R_TRAVELP_RK
+      ENTITY Travel
+        EXECUTE Discard FROM
+        VALUE #( ( %key-TravelID = travel_id ) )
+     MAPPED DATA(mapped)
+     FAILED DATA(failed)
+     REPORTED DATA(reported).
+
+    "persist changes
+    COMMIT ENTITIES
+      RESPONSE OF ZRAP100_R_TRAVELP_RK
+      FAILED DATA(failed_commit)
+      REPORTED DATA(reported_commit).
+
+    "console output
+    console_output->write( |Exercise 9.7: DISCARD a draft Travel BO entity instance | ).
+    console_output->write( |- TravelID = { travel_id } | ).
+    IF failed IS NOT INITIAL.
+      console_output->write( |- Cause for failed discard: { failed-travel[ 1 ]-%fail-cause } | ).
+    ELSEIF failed_commit IS NOT INITIAL.
+      console_output->write( |- Cause for failed commit: { failed_commit-travel[ 1 ]-%fail-cause } | ).
+    ENDIF.
+    console_output->write( |--------------------------------------------- | ).
+  ENDMETHOD.
+
+
   METHOD if_oo_adt_classrun~main.
     """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     " [Legende for operation execution]
@@ -143,143 +284,4 @@ CLASS zcl_rap100_eml_rk IMPLEMENTATION.
     ENDIF.
     console_output->write( |--------------------------------------------- | ).
   ENDMETHOD.
-
-
-  METHOD create_travel.
-    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " Exercise 9.4: Create a travel BO entity instance
-    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    "create in the transactional buffer
-    MODIFY ENTITIES OF ZRAP100_R_TRAVELP_RK
-      ENTITY travel
-        CREATE FIELDS ( CustomerID AgencyID BeginDate EndDate Description )
-          WITH VALUE #( ( %cid        = 'create_travel'
-                          %is_draft   = instance_state
-                          CustomerID  = '15'
-                          AgencyID    = '070042'
-                          BeginDate   = cl_abap_context_info=>get_system_date( )
-                          EndDate     = cl_abap_context_info=>get_system_date( ) + 10
-                          Description = | ABAP DevDays { cl_abap_context_info=>get_system_time(  ) } |
-                      ) )
-
-*      "execute action `rejectTravel`
-*        ENTITY travel
-*        EXECUTE rejectTravel
-*        FROM VALUE #( ( %cid_ref = 'create_travel' %is_draft = instance_state ) )
-
-      MAPPED DATA(mapped)
-      FAILED DATA(failed)
-      REPORTED DATA(reported).
-
-    "persist changes
-    COMMIT ENTITIES
-      RESPONSE OF ZRAP100_R_TRAVELP_RK
-      FAILED DATA(failed_commit)
-      REPORTED DATA(reported_commit).
-
-    "console output
-    console_output->write( |Exercise 9.4: CREATE a new Travel BO entity instance| ).
-    console_output->write( mapped-travel ).
-    IF failed IS NOT INITIAL.
-      console_output->write( |- Cause for failed create: { failed-travel[ 1 ]-%fail-cause } | ).
-    ELSEIF failed_commit IS NOT INITIAL.
-      console_output->write( |- Cause for failed commit: { failed_commit-travel[ 1 ]-%fail-cause } | ).
-    ENDIF.
-    console_output->write( |--------------------------------------------- | ).
-  ENDMETHOD.
-
-
-  METHOD delete_travel.
-    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " Exercise 9.5: Delete a travel BO entity instance
-    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    "delete in the transactional buffer
-    MODIFY ENTITIES OF ZRAP100_R_TRAVELP_RK
-      ENTITY travel
-        DELETE FROM
-          VALUE
-             #( ( TravelID = travel_id  %is_draft   = instance_state ) )
-     FAILED DATA(failed)
-     REPORTED DATA(reported).
-
-    "persist changes
-    COMMIT ENTITIES
-      RESPONSE OF ZRAP100_R_TRAVELP_RK
-      FAILED     DATA(failed_commit)
-      REPORTED   DATA(reported_commit).
-
-    "console output
-    console_output->write( |Exercise 9.5: DELETE a Travel BO entity instance | ).
-    console_output->write( |- TravelID = { travel_id } | ).
-    IF failed IS NOT INITIAL.
-      console_output->write( |- Cause for failed delete: { failed-travel[ 1 ]-%fail-cause } | ).
-    ELSEIF failed_commit IS NOT INITIAL.
-      console_output->write( |- Cause for failed commit: { failed_commit-travel[ 1 ]-%fail-cause } | ).
-    ENDIF.
-    console_output->write( |--------------------------------------------- | ).
-  ENDMETHOD.
-
-
-  METHOD activate_travel_draft.
-    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " Exercise 9.6: Activate a draft travel BO entity instance
-    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-    "activate travel instance in the transactional buffer
-    MODIFY ENTITIES OF ZRAP100_R_TRAVELP_RK
-      ENTITY Travel
-        EXECUTE Activate FROM
-        VALUE #( ( %cid = 'activate_draft_travel'  %key-TravelID = travel_id ) )
-     MAPPED DATA(mapped)
-     FAILED DATA(failed)
-     REPORTED DATA(reported).
-
-    "persist changes
-    COMMIT ENTITIES
-      RESPONSE OF ZRAP100_R_TRAVELP_RK
-      FAILED DATA(failed_commit)
-      REPORTED DATA(reported_commit).
-
-    "console output
-    console_output->write( |Exercise 9.6: ACTIVATE a draft Travel BO entity instance | ).
-    console_output->write( |- TravelID = { travel_id } | ).
-    IF failed IS NOT INITIAL.
-      console_output->write( |- Cause for failed activate: { failed-travel[ 1 ]-%fail-cause } | ).
-    ELSEIF failed_commit IS NOT INITIAL.
-      console_output->write( |- Cause for failed commit: { failed_commit-travel[ 1 ]-%fail-cause } | ).
-    ENDIF.
-    console_output->write( |--------------------------------------------- | ).
-  ENDMETHOD.
-
-
-  METHOD discard_travel_draft.
-    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    " Exercise 9.7: Discard a draft travel BO entity instance
-    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    "activate travel instance in the transactional buffer
-    MODIFY ENTITIES OF ZRAP100_R_TRAVELP_RK
-      ENTITY Travel
-        EXECUTE Discard FROM
-        VALUE #( ( %key-TravelID = travel_id ) )
-     MAPPED DATA(mapped)
-     FAILED DATA(failed)
-     REPORTED DATA(reported).
-
-    "persist changes
-    COMMIT ENTITIES
-      RESPONSE OF ZRAP100_R_TRAVELP_RK
-      FAILED DATA(failed_commit)
-      REPORTED DATA(reported_commit).
-
-    "console output
-    console_output->write( |Exercise 9.7: DISCARD a draft Travel BO entity instance | ).
-    console_output->write( |- TravelID = { travel_id } | ).
-    IF failed IS NOT INITIAL.
-      console_output->write( |- Cause for failed discard: { failed-travel[ 1 ]-%fail-cause } | ).
-    ELSEIF failed_commit IS NOT INITIAL.
-      console_output->write( |- Cause for failed commit: { failed_commit-travel[ 1 ]-%fail-cause } | ).
-    ENDIF.
-    console_output->write( |--------------------------------------------- | ).
-  ENDMETHOD.
-
 ENDCLASS.

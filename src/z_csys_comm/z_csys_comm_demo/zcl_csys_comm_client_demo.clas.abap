@@ -17,11 +17,13 @@ class zcl_csys_comm_client_demo definition
       co_uri_path      type string value '/sap/opu/odata/sap/ZPDCDS_SRV/SEPMRA_I_Product_E',
       co_uri_path_auth type string value '/sap/opu/odata/iwbep/GWSAMPLE_BASIC/',
       co_query         type string value '?$top=1&$format=json'.
-endclass.
+ENDCLASS.
 
 
 
-class zcl_csys_comm_client_demo implementation.
+CLASS ZCL_CSYS_COMM_CLIENT_DEMO IMPLEMENTATION.
+
+
   method if_oo_adt_classrun~main.
     csys_comm_hdl = new zcl_csys_comm_hdl_url( i_url = |https://{ co_host }{ co_uri_path }{ co_query }| ).
     out->write( 'Client API via URL - Unauthenticated' ).
@@ -43,31 +45,33 @@ class zcl_csys_comm_client_demo implementation.
     csys_comm_hdl = new zcl_csys_comm_hdl_arrange(
       i_scenario_id = 'Z_API_ES5_CSCN_BAUTH'
       i_service_id  = 'Z_ES5_OUTB_REST'
-      i_uri_path    = co_uri_path
+      i_uri_path    = co_uri_path_auth
       i_query       = co_query
     ).
     out->write( 'Client API via Arragements - Basic Auth' ).
     send_http_request( out ).
+
     out->write( 'Service Communication Model via Arragements - Basic Auth' ).
     send_scm_request( out ).
 
+    out->write( 'Communication via Cloud Destination unauthenticated' ).
+    csys_comm_hdl = new zcl_csys_comm_hdl_cloud_dest(
+      i_destination = 'ES5'
+      i_uri_path    = co_uri_path
+      i_query       = co_query
+    ).
+    send_http_request( out ).
 
-*    out->write( 'Communication via Cloud Destination unauthenticated' ).
-*    csys_comm_hdl = new zcl_csys_comm_hdl_cloud_dest(
-*      i_destination = 'ES5'
-*      i_uri_path    = co_uri_path
-*      i_query       = co_query
-*    ).
-*    send_http_request( out ).
-
-*    out->write( 'Communication via RFC Destination unauthenticated' ).
-*    csys_comm_hdl = new zcl_csys_comm_hdl_rfc_dest(
-*      i_destination = ''
-*      i_uri_path    = co_uri_path
-*      i_query       = co_query
-*    ).
-*    send_http_request( out ).
+    out->write( 'Communication via RFC Destination unauthenticated' ).
+    csys_comm_hdl = new zcl_csys_comm_hdl_rfc_dest(
+      i_destination = 'BTP_S44_RFC'
+      i_uri_path    = co_uri_path
+      i_query       = co_query
+    ).
+    send_http_request( out ).
   endmethod.
+
+
   method send_http_request.
     try.
         data(http_response) = csys_comm_hdl->send( ).
@@ -83,6 +87,7 @@ class zcl_csys_comm_client_demo implementation.
        ).
     endtry.
   endmethod.
+
 
   method send_scm_request.
     data:
@@ -181,5 +186,4 @@ class zcl_csys_comm_client_demo implementation.
 
     endtry.
   endmethod.
-
-endclass.
+ENDCLASS.

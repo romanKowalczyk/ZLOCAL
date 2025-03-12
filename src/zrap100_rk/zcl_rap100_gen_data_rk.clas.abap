@@ -10,7 +10,10 @@ CLASS zcl_rap100_gen_data_rk DEFINITION
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS zcl_rap100_gen_data_rk IMPLEMENTATION.
+
+
+CLASS ZCL_RAP100_GEN_DATA_RK IMPLEMENTATION.
+
 
   METHOD if_oo_adt_classrun~main.
     DATA:

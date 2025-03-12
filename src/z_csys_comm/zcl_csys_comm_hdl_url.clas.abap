@@ -12,18 +12,23 @@ class zcl_csys_comm_hdl_url definition
   private section.
     data url type string.
     data http_method type if_web_http_client=>method.
-endclass.
+ENDCLASS.
 
-class zcl_csys_comm_hdl_url implementation.
+
+
+CLASS ZCL_CSYS_COMM_HDL_URL IMPLEMENTATION.
+
 
   method constructor.
     url = i_url.
     set_http_method( if_web_http_client=>get ).
   endmethod.
 
+
   method set_http_method.
     http_method = i_http_method.
   endmethod.
+
 
   method zif_csys_comm_handler~send.
     data http_destination type ref to if_http_destination.
@@ -45,5 +50,4 @@ class zcl_csys_comm_hdl_url implementation.
             previous = http_exc.
     endtry.
   endmethod.
-
-endclass.
+ENDCLASS.

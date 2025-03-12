@@ -26,11 +26,13 @@ class yrap_r_tc_mp_100_trav definition
 
     methods:
       create_with_action for testing raising cx_static_check.
-endclass.
+ENDCLASS.
 
 
 
-class yrap_r_tc_mp_100_trav implementation.
+CLASS YRAP_R_TC_MP_100_TRAV IMPLEMENTATION.
+
+
   method class_setup.
     " create the test doubles for the underlying CDS entities
     cds_test_environment = cl_cds_test_environment=>create_for_multiple_cds( i_for_entities = value #( ( i_for_entity = 'YRAP_R_MP_100_TRAV' ) ) ).
@@ -53,25 +55,12 @@ class yrap_r_tc_mp_100_trav implementation.
     flight_mock_data = value #( ( carrier_id = '123' connection_id = '9876' flight_date = begin_date price = '2000' currency_code = 'EUR' ) ).
   endmethod.
 
+
   method class_teardown.
     cds_test_environment->destroy( ).
     sql_test_environment->destroy( ).
   endmethod.
 
-  method setup.
-    " clear test doubles per test
-    cds_test_environment->clear_doubles( ).
-    sql_test_environment->clear_doubles( ).
-    " insert test data into test doubles
-    sql_test_environment->insert_test_data( agency_mock_data ).
-    sql_test_environment->insert_test_data( customer_mock_data ).
-    sql_test_environment->insert_test_data( carrier_mock_data ).
-    sql_test_environment->insert_test_data( flight_mock_data ).
-  endmethod.
-
-  method teardown.
-    rollback entities.
-  endmethod.
 
   method create_with_action.
     " create complete composition Travel (root)
@@ -130,4 +119,20 @@ class yrap_r_tc_mp_100_trav implementation.
 
   endmethod.
 
-endclass.
+
+  method setup.
+    " clear test doubles per test
+    cds_test_environment->clear_doubles( ).
+    sql_test_environment->clear_doubles( ).
+    " insert test data into test doubles
+    sql_test_environment->insert_test_data( agency_mock_data ).
+    sql_test_environment->insert_test_data( customer_mock_data ).
+    sql_test_environment->insert_test_data( carrier_mock_data ).
+    sql_test_environment->insert_test_data( flight_mock_data ).
+  endmethod.
+
+
+  method teardown.
+    rollback entities.
+  endmethod.
+ENDCLASS.

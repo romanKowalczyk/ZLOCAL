@@ -12,7 +12,8 @@ ENDCLASS.
 
 
 
-CLASS ycl_rap100_gen_data_lhu IMPLEMENTATION.
+CLASS YCL_RAP100_GEN_DATA_LHU IMPLEMENTATION.
+
 
   METHOD if_oo_adt_classrun~main.
     DATA:
@@ -58,5 +59,4 @@ CLASS ycl_rap100_gen_data_lhu IMPLEMENTATION.
     COMMIT WORK.
     out->write( |[RAP100] Demo data generated for table YRAP100_ATRAV{ group_id }. | ).
   ENDMETHOD.
-
 ENDCLASS.

@@ -35,31 +35,12 @@ class yrap_ce_cl_mp_products definition
       returning value(r_http_destination) type ref to if_http_destination
       RAISING
         cx_http_dest_provider_error.
-endclass.
+ENDCLASS.
 
 
-class yrap_ce_cl_mp_products implementation.
-  method if_oo_adt_classrun~main.
-    data business_data type t_business_data.
-    data filter_conditions type if_rap_query_filter=>tt_name_range_pairs.
-    data ranges_table type if_rap_query_filter=>tt_range_option.
-    ranges_table = value #( ( sign = 'I' option = 'GE' low = 'HT-1200' ) ).
-    filter_conditions = value #( ( name = 'PRODUCT' range = ranges_table ) ).
 
-    try.
-        get_products(
-          exporting
-            it_filter_cond   = filter_conditions
-            top              = 3
-            skip             = 1
-          importing
-            et_business_data = business_data
-        ).
-        out->write( business_data ).
-      catch cx_root into data(exc).
-        out->write( cl_message_helper=>get_latest_t100_exception( exc )->if_message~get_longtext( ) ).
-    endtry.
-  endmethod.
+CLASS YRAP_CE_CL_MP_PRODUCTS IMPLEMENTATION.
+
 
   method get_products.
     data:
@@ -159,31 +140,29 @@ class yrap_ce_cl_mp_products implementation.
 *    endtry.
   endmethod.
 
-  method provide_http_destination.
-    case i_http_dest_seek.
-      when co_http_dest_seek_ca.
-        "find destination via Communication Arragement
-        data(ca_factory) = cl_com_arrangement_factory=>create_instance( ).
-        data(cscn_id_range) = value if_com_scenario_factory=>ty_query-cscn_id_range(
-            ( sign = 'I' option = 'EQ' low = 'Z_API_ES5_CSCN')
-        ).
-        ca_factory->query_ca(
-          exporting
-            is_query           = value #( cscn_id_range = cscn_id_range )
-          importing
-            et_com_arrangement = data(cas)
-        ).
-        read table cas into data(ca) index 1.
 
-        r_http_destination = cl_http_destination_provider=>create_by_comm_arrangement(
-               comm_scenario  = 'Z_API_ES5_CSCN'
-               service_id     = 'Z_ES5_OUTB_REST'
-               comm_system_id = ca->get_comm_system_id( )
+  method if_oo_adt_classrun~main.
+    data business_data type t_business_data.
+    data filter_conditions type if_rap_query_filter=>tt_name_range_pairs.
+    data ranges_table type if_rap_query_filter=>tt_range_option.
+    ranges_table = value #( ( sign = 'I' option = 'GE' low = 'HT-1200' ) ).
+    filter_conditions = value #( ( name = 'PRODUCT' range = ranges_table ) ).
+
+    try.
+        get_products(
+          exporting
+            it_filter_cond   = filter_conditions
+            top              = 3
+            skip             = 1
+          importing
+            et_business_data = business_data
         ).
-      when co_http_dest_seek_url.
-        r_http_destination = cl_http_destination_provider=>create_by_url( i_url = 'https://sapes5.sapdevcenter.com' ).
-    endcase.
+        out->write( business_data ).
+      catch cx_root into data(exc).
+        out->write( cl_message_helper=>get_latest_t100_exception( exc )->if_message~get_longtext( ) ).
+    endtry.
   endmethod.
+
 
   method if_rap_query_provider~select.
     data business_data type t_business_data.
@@ -222,4 +201,30 @@ class yrap_ce_cl_mp_products implementation.
      endtry.
   endmethod.
 
-endclass.
+
+  method provide_http_destination.
+    case i_http_dest_seek.
+      when co_http_dest_seek_ca.
+        "find destination via Communication Arragement
+        data(ca_factory) = cl_com_arrangement_factory=>create_instance( ).
+        data(cscn_id_range) = value if_com_scenario_factory=>ty_query-cscn_id_range(
+            ( sign = 'I' option = 'EQ' low = 'Z_API_ES5_CSCN')
+        ).
+        ca_factory->query_ca(
+          exporting
+            is_query           = value #( cscn_id_range = cscn_id_range )
+          importing
+            et_com_arrangement = data(cas)
+        ).
+        read table cas into data(ca) index 1.
+
+        r_http_destination = cl_http_destination_provider=>create_by_comm_arrangement(
+               comm_scenario  = 'Z_API_ES5_CSCN'
+               service_id     = 'Z_ES5_OUTB_REST'
+               comm_system_id = ca->get_comm_system_id( )
+        ).
+      when co_http_dest_seek_url.
+        r_http_destination = cl_http_destination_provider=>create_by_url( i_url = 'https://sapes5.sapdevcenter.com' ).
+    endcase.
+  endmethod.
+ENDCLASS.

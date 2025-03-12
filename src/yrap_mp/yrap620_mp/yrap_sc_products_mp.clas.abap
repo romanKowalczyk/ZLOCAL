@@ -95,7 +95,9 @@ CLASS yrap_sc_products_mp DEFINITION
 ENDCLASS.
 
 
-CLASS yrap_sc_products_mp IMPLEMENTATION.
+
+CLASS YRAP_SC_PRODUCTS_MP IMPLEMENTATION.
+
 
   METHOD /iwbep/if_v4_mp_basic_pm~define.
 
@@ -256,6 +258,4 @@ CLASS yrap_sc_products_mp IMPLEMENTATION.
     lo_primitive_property->set_is_nullable( ).
 
   ENDMETHOD.
-
-
 ENDCLASS.

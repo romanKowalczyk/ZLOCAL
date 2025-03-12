@@ -32,30 +32,6 @@ ENDCLASS.
 CLASS YCL_CE_MP_R620_PRODUCTS IMPLEMENTATION.
 
 
-  METHOD if_oo_adt_classrun~main.
-    DATA business_data TYPE t_business_data.
-    DATA filter_conditions TYPE if_rap_query_filter=>tt_name_range_pairs.
-    DATA range_table TYPE if_rap_query_filter=>tt_range_option.
-
-    range_table = VALUE #( ( sign = 'I' option = 'GE' low = 'HIT-1200' ) ).
-    filter_conditions = VALUE #( ( name = 'PRODUCT' range = range_table ) ).
-
-    TRY.
-        get_products(
-            EXPORTING
-                it_filter_cond = filter_conditions
-                top = 3
-                skip = 1
-            IMPORTING
-                et_business_data = business_data
-        ).
-        out->write( business_data ).
-      CATCH cx_root INTO DATA(exc).
-        out->write( cl_message_helper=>get_latest_t100_exception( exc )->if_message~get_longtext( ) ).
-    ENDTRY.
-  ENDMETHOD.
-
-
   METHOD get_products.
     DATA: filter_factory   TYPE REF TO /iwbep/if_cp_filter_factory,
           filteR_node      TYPE REF TO /iwbep/if_cp_filter_node,
@@ -113,6 +89,30 @@ CLASS YCL_CE_MP_R620_PRODUCTS IMPLEMENTATION.
     read_list_response = read_list_request->execute( ).
     read_list_response->get_business_data( IMPORTING et_business_data = et_business_data ).
 
+  ENDMETHOD.
+
+
+  METHOD if_oo_adt_classrun~main.
+    DATA business_data TYPE t_business_data.
+    DATA filter_conditions TYPE if_rap_query_filter=>tt_name_range_pairs.
+    DATA range_table TYPE if_rap_query_filter=>tt_range_option.
+
+    range_table = VALUE #( ( sign = 'I' option = 'GE' low = 'HIT-1200' ) ).
+    filter_conditions = VALUE #( ( name = 'PRODUCT' range = range_table ) ).
+
+    TRY.
+        get_products(
+            EXPORTING
+                it_filter_cond = filter_conditions
+                top = 3
+                skip = 1
+            IMPORTING
+                et_business_data = business_data
+        ).
+        out->write( business_data ).
+      CATCH cx_root INTO DATA(exc).
+        out->write( cl_message_helper=>get_latest_t100_exception( exc )->if_message~get_longtext( ) ).
+    ENDTRY.
   ENDMETHOD.
 
 

@@ -1,0 +1,34 @@
+{
+  "formatVersion": "1",
+  "header": {
+    "description": "RAP Inventory App",
+    "originalLanguage": "en",
+    "abapLanguageVersion": "cloudDevelopment"
+  },
+  "generalInformation": {
+    "appType": "ui5",
+    "catalogId": "SAP_TC_UI5_REPO_UIAD"
+  },
+  "ui5AppDetails": {
+    "appId": "com.knauf.demo.yrap620mp"
+  },
+  "navigation": {
+    "targetMappingId": "UI5R_341E36B633940AC75B9D87E67916D630B8A5CCEA_TM",
+    "semanticObject": "RAP620_MP",
+    "action": "run",
+    "desktop": true,
+    "tablet": true,
+    "phone": true
+  },
+  "tiles": [
+    {
+      "id": "UI5R_341E36B633940AC75B9D87E67916D630B8A5CCEA_AL",
+      "tileType": "static",
+      "isDefault": true,
+      "standard": {
+        "title": "RAP Inventory App",
+        "subtitle": "RAP620 MP"
+      }
+    }
+  ]
+}
